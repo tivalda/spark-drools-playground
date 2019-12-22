@@ -34,7 +34,7 @@ object App extends Logging {
       , ApplicantForLoan(18, "Phanindra", "Ramavojjala", 100, 671)
     )
 
-    val spark = SparkSessionSingleton.getInstance(None)
+    val spark = SparkSessionSingleton.getInstance()
     val rules = loadRules
     val broadcastRules = spark.sparkContext.broadcast(rules)
     val applicants = spark.sparkContext.parallelize(inputData)
@@ -45,9 +45,9 @@ object App extends Logging {
 
     val applicantsDS = applicants.toDF()
     applicantsDS.show(false)
-    val df_size_in_bytes: Long = checkDFSize(spark, applicantsDS)
+    //val df_size_in_bytes: Long = checkDFSize(spark, applicantsDS)
 
-    logInfo("byteCountToDisplaySize - df_size_in_bytes " + df_size_in_bytes)
+    //logInfo("byteCountToDisplaySize - df_size_in_bytes " + df_size_in_bytes)
     logInfo(applicantsDS.rdd.toDebugString)
 
     val approvedguys = applicants.map {
